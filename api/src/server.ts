@@ -5,7 +5,8 @@ import reviewRouter from "./routes/review.routes.ts";
 import gigRouter from "./routes/gig.routes.ts";
 import authRouter from "./routes/auth.routes.ts";
 import errorMiddleware from "./middleware/errorHandler.ts";
-
+import cors from "cors"
+import cookieParser from "cookie-parser";
 
 // env dosyasindaki degiskenlere erisir
 dotenv.config();
@@ -23,6 +24,14 @@ const app = express();
 
 // middleware'ler
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(cors({
+    origin : "http://localhost5173",
+    methods : ["GET","POST", "PATCH", "DELETE", "PUT"],
+    credentials : true,
+})) //cors hatalarini onleyen mw
+
 
 // route'lar
 app.use("/api/auth", authRouter);
@@ -39,5 +48,5 @@ app.listen(process.env.PORT , ()=>{
     console.log(`💥✨ server ${process.env.PORT}. port dinlenmeye basladi` )
 })
 
-app.use(express.json())
+
 
